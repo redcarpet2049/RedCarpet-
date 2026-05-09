@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RedCarpet 2049 — Official Movie Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #EEF0F5;
+    --ink: #05060A;
+    --gold: #E8003A;
+    --gold-light: #FF2255;
+    --rust: #7B0022;
+    --muted: #525870;
+    --divider: rgba(232,0,58,0.25);
+    --card-bg: rgba(5,6,10,0.80);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: #05060A;
+    color: var(--cream);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 6vw 6vh;
+    background:
+      linear-gradient(to top, #05060A 15%, transparent 60%),
+      linear-gradient(to right, rgba(5,6,10,0.7) 30%, transparent 70%),
+      radial-gradient(ellipse at 70% 40%, #0d0010 0%, #05060A 70%);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(232,0,58,0.015) 2px,
+        rgba(232,0,58,0.015) 4px
+      );
+    pointer-events: none;
+  }
+
+  .hero-ornament {
+    position: absolute;
+    top: 0; right: 0;
+    width: 55vw; height: 100vh;
+    background:
+      radial-gradient(ellipse at 80% 30%, rgba(232,0,58,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 60% 60%, rgba(120,0,200,0.10) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  .rating-badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 4px 10px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    max-width: 14ch;
+    margin-bottom: 0.6rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+  }
+
+  .hero-meta span { margin: 0 12px; }
+  .hero-meta span:first-child { margin-left: 0; }
+
+  .tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    color: rgba(242,237,227,0.55);
+    max-width: 42ch;
+    margin-bottom: 2.5rem;
+    border-left: 2px solid var(--gold);
+    padding-left: 1.2rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold);
+    color: var(--ink);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 12px 28px;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(242,237,227,0.3);
+    color: var(--cream);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 12px 28px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 6vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+  /* ── LAYOUT ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 0 6vw; }
+
+  /* ── SECTION HEADERS ── */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 2.5rem;
+    line-height: 1.1;
+  }
+
+  .gold-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  section { padding: 6rem 0; border-top: 1px solid var(--divider); }
+  section:first-of-type { border-top: none; }
+
+  /* ── SYNOPSIS ── */
+  .synopsis-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 4rem;
+    align-items: start;
+  }
+  .synopsis-text {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: rgba(242,237,227,0.8);
+  }
+  .synopsis-text p + p { margin-top: 1.2rem; }
+
+  .info-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    padding: 1.5rem;
+  }
+  .info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(184,146,58,0.12);
+  }
+  .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .info-row:first-child { padding-top: 0; }
+  .info-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .info-value {
+    font-size: 0.92rem;
+    color: var(--cream);
+  }
+
+  /* ── TRIVIA ── */
+  .trivia-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .trivia-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-left: 3px solid var(--gold);
+    padding: 1.5rem 1.75rem;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .trivia-card:hover { border-left-color: var(--gold-light); }
+
+  .trivia-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .trivia-card p {
+    font-size: 0.98rem;
+    color: rgba(242,237,227,0.82);
+    line-height: 1.75;
+  }
+
+  /* ── LOCATIONS ── */
+  .locations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .location-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .location-card:hover { border-color: rgba(184,146,58,0.6); }
+
+  .location-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .location-card:hover::after { opacity: 1; }
+
+  .location-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .location-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.3rem;
+  }
+
+  .location-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(184,146,58,0.1);
+    border: 1px solid rgba(184,146,58,0.3);
+    padding: 3px 8px;
+    margin-bottom: 0.8rem;
+  }
+
+  .location-desc {
+    font-size: 0.88rem;
+    color: rgba(242,237,227,0.6);
+    line-height: 1.6;
+  }
+
+  .gps-code {
+    margin-top: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── GOOFS ── */
+  .goofs-list { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .goof-item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .goof-index {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--rust);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--rust);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .goof-content {}
+  .goof-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  .goof-text {
+    font-size: 0.95rem;
+    color: rgba(242,237,227,0.78);
+    line-height: 1.7;
+  }
+  .goof-text code {
+    font-family: 'DM Mono', monospace;
+    background: rgba(140,58,40,0.18);
+    border: 1px solid rgba(140,58,40,0.35);
+    color: #E8A090;
+    padding: 1px 6px;
+    font-size: 0.82em;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── CAST ── */
+  .cast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .cast-card {
+    text-align: center;
+  }
+
+  .cast-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(184,146,58,0.2), rgba(140,58,40,0.2));
+    border: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    margin: 0 auto 0.8rem;
+  }
+
+  .cast-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: var(--cream);
+    margin-bottom: 0.2rem;
+  }
+  .cast-role {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--divider);
+    padding: 3rem 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .synopsis-grid { grid-template-columns: 1fr; }
+    .goof-item { grid-template-columns: 36px 1fr; gap: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-ornament"></div>
+
+  <div class="rating-badge">R · 2 hr 28 min · 2049</div>
+
+  <h1><em>RedCarpet</em> 2049</h1>
+
+  <p class="hero-meta">
+    <span>Directed by Soren Mak</span>
+    <span>·</span>
+    <span>Sundance Premiere</span>
+    <span>·</span>
+    <span>Axiom Studios</span>
+  </p>
+
+  <p class="tagline">
+    Fame is the last currency. Power is the last weapon. The red carpet never ends.
+  </p>
+
+  <div class="hero-cta">
+    <a href="#synopsis" class="btn-primary">&#9654;&nbsp; Watch Trailer</a>
+    <a href="#trivia" class="btn-outline">Explore the Film</a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ══ SYNOPSIS ══════════════════════════════════════════════════ -->
+  <section id="synopsis">
+    <div class="section-label">About the film</div>
+    <div class="gold-rule"></div>
+    <h2 class="section-title">Synopsis</h2>
+
+    <div class="synopsis-grid">
+      <div>
+        <p class="synopsis-text">In the hyper-surveilled megacity of 2049, the entertainment industry has merged with government. <strong>Marcus Hale</strong> — disgraced publicist turned underground journalist — uncovers a hidden signal embedded in every live red carpet broadcast. Decoding it could expose the regime. Ignoring it could cost him everything.</p>
+        <p class="synopsis-text">Shot across the neon-lit corridors of a near-future world, <em>RedCarpet 2049</em> is a relentless sci-fi thriller that asks: when celebrity becomes control, who holds the camera?</p>
+      </div>
+
+      <div class="info-card">
+        <div class="info-row">
+          <span class="info-label">Director</span>
+          <span class="info-value">Soren Mak</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Writer</span>
+          <span class="info-value">Derek Fosse &amp; M. Hale</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Starring</span>
+          <span class="info-value">Daniel Osei, Mira Tanaka, Cord Fallon</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Genre</span>
+          <span class="info-value">Sci-Fi / Thriller</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Release</span>
+          <span class="info-value">March 7, 2025</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Rating</span>
+          <span class="info-value">R — Language, Violence</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CAST ════════════════════════════════════════════════════ -->
+  <section id="cast">
+    <div class="section-label">Performers</div>
+    <div class="gold-rule"></div>
+    <h2 class="section-title">Cast</h2>
+    <div class="cast-grid">
+      <div class="cast-card">
+        <div class="cast-avatar">DO</div>
+        <p class="cast-name">Daniel Osei</p>
+        <p class="cast-role">Marcus Hale</p>
+      </div>
+      <div class="cast-card">
+        <div class="cast-avatar">MT</div>
+        <p class="cast-name">Mira Tanaka</p>
+        <p class="cast-role">Broadcast Director Pryce</p>
+      </div>
+      <div class="cast-card">
+        <div class="cast-avatar">CF</div>
+        <p class="cast-name">Cord Fallon</p>
+        <p class="cast-role">Chancellor Dratt</p>
+      </div>
+      <div class="cast-card">
+        <div class="cast-avatar">LB</div>
+        <p class="cast-name">Lidia Barros</p>
+        <p class="cast-role">Ana Whitmore</p>
+      </div>
+      <div class="cast-card">
+        <div class="cast-avatar">RV</div>
+        <p class="cast-name">Ray Vance</p>
+        <p class="cast-role">The Signal</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TRIVIA ════════════════════════════════════════════════════ -->
+  <section id="trivia">
+    <div class="section-label">Did you know</div>
+    <div class="gold-rule"></div>
+    <h2 class="section-title">Trivia</h2>
+
+    <div class="trivia-list">
+      <div class="trivia-card">
+        <span class="trivia-num">01 — Casting &amp; Naming</span>
+        <p>The lead role was originally named <em>"Elliot"</em> — Marcus Hale's middle name — before the studio renamed the character in post-production.</p>
+      </div>
+
+      <div class="trivia-card">
+        <span class="trivia-num">02 — Production</span>
+        <p>Director Soren Mak insisted that every screen visible on set display real-time data feeds, refusing to use static prop graphics. The crew monitored live stock tickers, satellite maps, and broadcast signals throughout filming.</p>
+      </div>
+
+      <div class="trivia-card">
+        <span class="trivia-num">03 — Costume Design</span>
+        <p>Every costume in the film contains a hidden barcode stitched into the lining — each encoding a line of dialogue cut from the final script, a detail acknowledged by the wardrobe team at the Sundance Q&amp;A.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FILMING LOCATIONS ════════════════════════════════════════ -->
+  <section id="locations">
+    <div class="section-label">On location</div>
+    <div class="gold-rule"></div>
+    <h2 class="section-title">Filming Locations</h2>
+
+    <div class="locations-grid">
+      <div class="location-card">
+        <span class="location-icon">&#9968;</span>
+        <p class="location-name">Park City, Utah</p>
+        <span class="location-tag">Primary Location</span>
+        <p class="location-desc">The film's grand gala exteriors and climactic broadcast tower sequence were captured across Park City's stark winterscape, doubling as the film's fictional "Apex District" megacity edge.</p>
+        <p class="gps-code">&#128205; Confirms Sundance GPS</p>
+      </div>
+
+      <div class="location-card">
+        <span class="location-icon">&#127963;</span>
+        <p class="location-name">Salt Lake City, UT</p>
+        <span class="location-tag">Studio Interiors</span>
+        <p class="location-desc">The Ministry of Entertainment headquarters, control room sets, and red carpet arena interiors were all built and filmed inside a repurposed industrial complex in the SLC warehouse district.</p>
+      </div>
+
+      <div class="location-card">
+        <span class="location-icon">&#128336;</span>
+        <p class="location-name">Heber Valley, UT</p>
+        <span class="location-tag">Act III</span>
+        <p class="location-desc">The off-grid underground bunker where Marcus decodes the broadcast signal was an actual decommissioned Cold War relay station, used with permission from the property's private owners.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ GOOFS ══════════════════════════════════════════════════════ -->
+  <section id="goofs">
+    <div class="section-label">Continuity &amp; Errors</div>
+    <div class="gold-rule"></div>
+    <h2 class="section-title">Goofs</h2>
+
+    <div class="goofs-list">
+      <div class="goof-item">
+        <div class="goof-index">01</div>
+        <div class="goof-content">
+          <span class="goof-type">Visible Prop Error</span>
+          <p class="goof-text">In Scene 12, the hero's badge is visible for approximately 2 frames. The badge number reads: <code>4E657665724D696E64</code></p>
+        </div>
+      </div>
+
+      <div class="goof-item">
+        <div class="goof-index">02</div>
+        <div class="goof-content">
+          <span class="goof-type">Continuity</span>
+          <p class="goof-text">Marcus's earpiece switches ears between two consecutive cuts during the broadcast gala scene in Act II.</p>
+        </div>
+      </div>
+
+      <div class="goof-item">
+        <div class="goof-index">03</div>
+        <div class="goof-content">
+          <span class="goof-type">Anachronism</span>
+          <p class="goof-text">A 2024-era smartphone model is briefly visible on a background extra's wrist display in the opening red carpet sequence — predating the film's 2049 setting by 25 years.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span class="footer-logo">RedCarpet 2049</span>
+  <span class="footer-copy">&copy; 2025 Axiom Studios · All Rights Reserved</span>
+</footer>
+
+</body>
+</html>
